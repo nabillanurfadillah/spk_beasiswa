@@ -19,6 +19,9 @@ class Admin extends CI_Controller
         $data['kriteria'] = $this->Dashboard_model->getAllKriteria();
         $data['alternatif'] = $this->Dashboard_model->getAllAlternatif();
 
+        $data['graph'] = $this->Dashboard_model->graph();
+
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);

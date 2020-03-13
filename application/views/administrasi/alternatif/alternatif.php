@@ -6,7 +6,7 @@
 
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <?php if (validation_errors()) : ?>
                 <div class="alert alert-danger" role="alert">
                     <?= validation_errors(); ?>
@@ -24,7 +24,9 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Nama Alternatif</th>
-                        <th scope="col">Hasil Alternatif</th>
+                        <th scope="col">Alamat</th>
+                        <th scope="col">Jenis Kelamin</th>
+
 
                         <th scope="col">Action</th>
                     </tr>
@@ -35,7 +37,9 @@
                         <tr>
                             <th scope="row"><?= $i ?></th>
                             <td><?= $a['nama_alternatif']; ?></td>
-                            <td><?= $a['hasil_alternatif']; ?></td>
+                            <td><?= $a['alamat']; ?></td>
+                            <td><?= $a['jk']; ?></td>
+
 
 
                             <td>

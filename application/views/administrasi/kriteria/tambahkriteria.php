@@ -22,8 +22,8 @@
                 <div class="col-sm-9">
                     <select name="tipe_kriteria" id="tipe_kriteria" class="form-control col-sm-9">
 
-                        <option value="cost">Cost</option>
-                        <option value="cost">Benefit</option>
+                        <option value="Cost">Cost</option>
+                        <option value="Benefit">Benefit</option>
 
 
                     </select>
@@ -45,7 +45,7 @@
                 <div class="col-sm-9">
                     <button type="submit" class="btn btn-primary">Tambah</button>
 
-                    <a href="<?= base_url('administrasi/nilai'); ?>" class="btn btn-danger">Kembali</a>
+                    <a href="<?= base_url('administrasi/kriteria'); ?>" class="btn btn-danger">Kembali</a>
                 </div>
             </div>
 

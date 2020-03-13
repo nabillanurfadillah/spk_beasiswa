@@ -15,4 +15,10 @@ class Dashboard_model extends CI_Model
     {
         return $this->db->get('alternatif')->result_array();
     }
+
+    public function graph()
+    {
+        $data = $this->db->query("SELECT * from alternatif");
+        return $data->result();
+    }
 }

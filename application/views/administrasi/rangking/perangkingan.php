@@ -52,27 +52,36 @@
 
                             <?php foreach ($kriteria as $k) : ?>
                                 <?php
-                                        $ida = $al['id_alternatif'];
-                                        $idk = $k['id_kriteria'];
-                                        $query = "SELECT rangking.*
+                                $ida = $al['id_alternatif'];
+                                $idk = $k['id_kriteria'];
+                                $query = "SELECT rangking.*
                                         FROM rangking 
                                         WHERE id_alternatif = $ida
                                         AND id_kriteria = $idk ";
-                                        $rang = $this->db->query($query);
-                                        $rang2 = $this->db->query($query)->result_array();
-                                        if ($rang->num_rows()) {
-                                            foreach ($rang2 as $r) {
-                                                $a = $r['nilai_normalisasi'];
-                                            };
-                                        } else {
-                                            $a = '-';
-                                        }
-                                        ?>
+                                $rang = $this->db->query($query);
+                                $rang2 = $this->db->query($query)->result_array();
+                                if ($rang->num_rows()) {
+                                    foreach ($rang2 as $r) {
+                                        $a = $r['nilai_normalisasi'];
+                                    };
+                                } else {
+                                    $a = '-';
+                                }
+                                ?>
                                 <td>
                                     <?= $a; ?>
                                 </td>
                             <?php endforeach; ?>
                             <td>
+                                <?php
+                                $query1 = "SELECT SUM(bobot_normalisasi) as hasil from rangking where id_alternatif = $ida ";
+                                $query2 = $this->db->query($query1)->result_array();
+
+                                foreach ($query2 as $hasil) {
+                                    $h = $hasil['hasil'];
+                                }
+                                ?>
+                                <?= $h; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

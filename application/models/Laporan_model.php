@@ -6,9 +6,13 @@ class Laporan_model extends CI_Model
     {
         return $this->db->get('alternatif')->result_array();
     }
-    public function getAllRangking()
+    public function getAllHitung()
     {
-        return $this->db->get('rangking')->result_array();
+        return $this->db->get('hitung')->result_array();
+    }
+    public function getAllSubKriteria()
+    {
+        return $this->db->get('subkriteria')->result_array();
     }
     public function getAllKriteria()
     {

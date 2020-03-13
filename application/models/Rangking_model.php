@@ -75,13 +75,32 @@ class Rangking_model extends CI_Model
         $this->db->where('id_rangking', $r['id_rangking']);
         $this->db->update('rangking');
 
+        $alt =  $this->db->get_where('alternatif', ['id_alternatif' => $alternatif])->row_array();
+        $ha = $alt['hasil_alternatif'];
+
+        $ht = $bn + $ha;
+
+        $data3 = ['hasil_alternatif' => $ht];
+
+        $this->db->set($data3);
+        $this->db->where('id_alternatif', $alternatif);
+        $this->db->update('alternatif');
+
+
+
+
+
+
+
+
+
+
 
         $query3 = "SELECT bobot_normalisasi
         FROM rangking
         WHERE id_alternatif = $alternatif
         AND id_kriteria = $kriteria";
         $hasil = $this->db->query($query3)->row_array();
-        
     }
     public function editDataRangking($id_rangking)
     {

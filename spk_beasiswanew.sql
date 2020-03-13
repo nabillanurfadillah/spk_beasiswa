@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 21 Des 2019 pada 07.04
+-- Generation Time: 13 Mar 2020 pada 09.11
 -- Versi Server: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spk_beasiswa`
+-- Database: `spk_beasiswanew`
 --
 
 -- --------------------------------------------------------
@@ -29,17 +29,46 @@ SET time_zone = "+00:00";
 CREATE TABLE `alternatif` (
   `id_alternatif` int(11) NOT NULL,
   `nama_alternatif` varchar(255) NOT NULL,
-  `hasil_alternatif` float NOT NULL
+  `jk` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `alternatif`
 --
 
-INSERT INTO `alternatif` (`id_alternatif`, `nama_alternatif`, `hasil_alternatif`) VALUES
-(1, 'Andi', 0),
-(3, 'Budi', 0),
-(4, 'Cinta', 0);
+INSERT INTO `alternatif` (`id_alternatif`, `nama_alternatif`, `jk`, `alamat`) VALUES
+(82, 'Nabilla Nur Fadillahh', 'Perempuan', 'Jl. Budi Utomo No. 04 RT 04 RW 04 Desa Buntu Kec. Kroya Kab. Cilacap 53282'),
+(83, 'Samson Sugiyarto', 'Laki-laki', 'Jl. Gadaian No. 645 Desa Sudagaran , Banyumas');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `hitung`
+--
+
+CREATE TABLE `hitung` (
+  `id_hitung` int(11) NOT NULL,
+  `id_alternatif` int(11) NOT NULL,
+  `id_subkriteria` int(11) NOT NULL,
+  `nilai_subkriteria` double NOT NULL,
+  `nilai_normalisasi` double NOT NULL,
+  `hasil` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `hitung`
+--
+
+INSERT INTO `hitung` (`id_hitung`, `id_alternatif`, `id_subkriteria`, `nilai_subkriteria`, `nilai_normalisasi`, `hasil`) VALUES
+(10, 82, 7, 0, 0, 0),
+(11, 82, 18, 0, 0, 0),
+(12, 82, 11, 0, 0, 0),
+(13, 82, 21, 0, 0, 0),
+(14, 83, 4, 0, 0, 0),
+(15, 83, 18, 0, 0, 0),
+(16, 83, 11, 0, 0, 0),
+(17, 83, 24, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -61,7 +90,8 @@ CREATE TABLE `kriteria` (
 INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `tipe_kriteria`, `id_nilai`) VALUES
 (5, 'Pendapatan Orang Tua', 'Cost', 5),
 (6, 'IPK Terakhir', 'Benefit', 4),
-(7, 'Jumlah Bersaudara', 'Benefit', 6);
+(7, 'Jumlah Bersaudara', 'Benefit', 6),
+(10, 'Semester', 'Benefit', 7);
 
 -- --------------------------------------------------------
 
@@ -82,7 +112,8 @@ CREATE TABLE `nilai` (
 INSERT INTO `nilai` (`id_nilai`, `keterangan_nilai`, `jumlah_nilai`) VALUES
 (4, 'Sangat Layak', 5),
 (5, 'Layak', 3),
-(6, 'Tidak Layak', 2);
+(6, 'Tidak Layak', 2),
+(7, 'Sangat Layak Sekali', 7);
 
 -- --------------------------------------------------------
 
@@ -104,15 +135,53 @@ CREATE TABLE `rangking` (
 --
 
 INSERT INTO `rangking` (`id_rangking`, `id_alternatif`, `id_kriteria`, `nilai_rangking`, `nilai_normalisasi`, `bobot_normalisasi`) VALUES
-(80, 1, 5, 2, 1, '3'),
-(81, 1, 6, 2, 0.4, '2'),
-(82, 1, 7, 3, 0.6, '1.2'),
-(83, 1, 5, 3, 0.66666666666667, '2'),
-(84, 1, 5, 3, 0.66666666666667, '2'),
-(85, 1, 6, 3, 0.6, '3'),
-(86, 1, 6, 3, 0.6, '3'),
-(87, 1, 5, 3, 0.66666666666667, '2'),
-(88, 1, 7, 3, 0.6, '1.2');
+(104, 3, 5, 3, 0.66666666666667, '2'),
+(105, 3, 6, 5, 1, '5'),
+(106, 3, 7, 5, 1, '2'),
+(107, 4, 5, 5, 0.4, '1.2'),
+(108, 4, 6, 5, 1, '5'),
+(109, 4, 7, 3, 0.6, '1.2'),
+(113, 1, 5, 2, 1, '3'),
+(114, 1, 6, 2, 0.4, '2'),
+(115, 1, 7, 2, 0.4, '0.8');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `subkriteria`
+--
+
+CREATE TABLE `subkriteria` (
+  `id_subkriteria` int(11) NOT NULL,
+  `id_kriteria` int(11) NOT NULL,
+  `nama_subkriteria` varchar(255) NOT NULL,
+  `nilai_subkriteria` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `subkriteria`
+--
+
+INSERT INTO `subkriteria` (`id_subkriteria`, `id_kriteria`, `nama_subkriteria`, `nilai_subkriteria`) VALUES
+(4, 5, '> 5.000.000.000', 2.5),
+(5, 5, '>3.000.000 - 5.000.000', 5),
+(6, 5, '>1.000.000 - 3.000.000', 7.5),
+(7, 5, '&lt;=1.000.000', 10),
+(10, 7, '0 Saudara', 0),
+(11, 7, '1 Saudara', 2.5),
+(12, 7, '2 Saudara', 5),
+(13, 7, '3 Saudara', 7.5),
+(14, 7, '> 4 Saudara', 10),
+(15, 6, 'IPK &lt; 2.50', 2.5),
+(16, 6, '2.50 &lt;=IPK&lt;= 3.00', 5),
+(17, 6, '3.00 > IPK &lt;=3.50', 7.5),
+(18, 6, 'IPK > 3.50', 10),
+(19, 10, 'Semester 2', 0),
+(20, 10, 'Semester 3', 2),
+(21, 10, 'Semester 4', 4),
+(22, 10, 'Semester 5', 6),
+(23, 10, 'Semester 6', 8),
+(24, 10, 'Semester 7', 10);
 
 -- --------------------------------------------------------
 
@@ -237,7 +306,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (10, 4, 'Kriteria', 'administrasi/kriteria', 'fas fa-fw fa-folder', 1),
 (11, 4, 'Alternatif', 'administrasi/alternatif', 'fas fa-fw fa-user', 1),
 (12, 4, 'Rangking', 'administrasi/rangking', 'fas fa-fw fa-tachometer-alt', 1),
-(13, 4, 'Laporan', 'administrasi/laporan', 'fas fa-fw fa-folder-open', 1);
+(13, 4, 'Laporan', 'administrasi/hasil_seleksi', 'fas fa-fw fa-folder-open', 1),
+(14, 4, 'Subkriteria', 'administrasi/subkriteria', 'fas fa-fw fa-folder-open', 1);
 
 -- --------------------------------------------------------
 
@@ -276,6 +346,12 @@ ALTER TABLE `alternatif`
   ADD PRIMARY KEY (`id_alternatif`);
 
 --
+-- Indexes for table `hitung`
+--
+ALTER TABLE `hitung`
+  ADD PRIMARY KEY (`id_hitung`);
+
+--
 -- Indexes for table `kriteria`
 --
 ALTER TABLE `kriteria`
@@ -292,6 +368,12 @@ ALTER TABLE `nilai`
 --
 ALTER TABLE `rangking`
   ADD PRIMARY KEY (`id_rangking`);
+
+--
+-- Indexes for table `subkriteria`
+--
+ALTER TABLE `subkriteria`
+  ADD PRIMARY KEY (`id_subkriteria`);
 
 --
 -- Indexes for table `user`
@@ -337,22 +419,32 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `alternatif`
 --
 ALTER TABLE `alternatif`
-  MODIFY `id_alternatif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_alternatif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+--
+-- AUTO_INCREMENT for table `hitung`
+--
+ALTER TABLE `hitung`
+  MODIFY `id_hitung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `rangking`
 --
 ALTER TABLE `rangking`
-  MODIFY `id_rangking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_rangking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+--
+-- AUTO_INCREMENT for table `subkriteria`
+--
+ALTER TABLE `subkriteria`
+  MODIFY `id_subkriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -367,7 +459,7 @@ ALTER TABLE `user_access_menu`
 -- AUTO_INCREMENT for table `user_menu`
 --
 ALTER TABLE `user_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user_role`
 --
@@ -377,7 +469,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `user_token`
 --
